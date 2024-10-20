@@ -14,22 +14,22 @@ export const TodoWrapper = () => {
 
   const sortedAndSearchedTaks = useTasks(tasks, filter);
 
-  const deleteTask = (task: ITodoItem) => {
+  const deleteItem = (task: ITodoItem) => {
     setTasks(tasks.filter((el) => el.id !== task.id));
   };
 
-  const addTask = (newTask: ITodoItem) => {
+  const addItem = (newTask: ITodoItem) => {
     setTasks([...tasks, newTask]);
   };
 
   return (
     <>
-      <TodoForm />
+      <TodoForm createTodo={addItem} />
       <div>
         <hr className={"my-5"} />
         <TaskFilter filter={filter} setFilter={setFilter} />
       </div>
-      <TodoList tasks={tasks} remove={deleteTask} />
+      <TodoList tasks={sortedAndSearchedTaks} remove={deleteItem} />
     </>
   );
 };

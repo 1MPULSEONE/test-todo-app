@@ -2,17 +2,21 @@
 
 import { Button, Input } from "@mui/material";
 import { useForm } from "react-hook-form";
-import React, { useState } from "react";
+import React from "react";
 import { type ITodoItem } from "../TodoItem/model/ITask";
 
 export interface ITodoForm {
   createTodo: (todo: ITodoItem) => void;
 }
 
-export const TodoForm: React.FC<ITodoForm> = ({ createTodo }) => {
-  const { register, handleSubmit, reset } = useForm();
+interface FormData {
+  taskName: string;
+}
 
-  const addNewTodo = (data: { taskName: string }) => {
+export const TodoForm: React.FC<ITodoForm> = ({ createTodo }) => {
+  const { register, handleSubmit, reset } = useForm<FormData>();
+
+  const addNewTodo = (data: FormData) => {
     const newTodo: ITodoItem = {
       id: Date.now().toString(),
       taskName: data.taskName,
@@ -26,7 +30,7 @@ export const TodoForm: React.FC<ITodoForm> = ({ createTodo }) => {
   return (
     <form
       className={"flex flex-col gap-y-2"}
-      onSubmit={handleSubmit((data) => addNewTodo(data))}
+      onSubmit={handleSubmit(addNewTodo)}
     >
       <Input
         type={"text"}
