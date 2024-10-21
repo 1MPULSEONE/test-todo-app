@@ -12,7 +12,7 @@ export const TodoWrapper = () => {
   const [tasks, setTasks] = useState<ITodoItem[]>([]);
   const [filter, setFilter] = useState<ITaskFilter>({ sort: "", query: "" });
 
-  const sortedAndSearchedTaks = useTasks(tasks, filter);
+  const sortedAndSearchedTasks = useTasks(tasks, filter);
 
   const deleteItem = (task: ITodoItem) => {
     setTasks(tasks.filter((el) => el.id !== task.id));
@@ -22,6 +22,14 @@ export const TodoWrapper = () => {
     setTasks([...tasks, newTask]);
   };
 
+  const updateItem = (updatedTask: ITodoItem) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task,
+      ),
+    );
+  };
+
   return (
     <>
       <TodoForm createTodo={addItem} />
@@ -29,7 +37,11 @@ export const TodoWrapper = () => {
         <hr className={"my-5"} />
         <TaskFilter filter={filter} setFilter={setFilter} />
       </div>
-      <TodoList tasks={sortedAndSearchedTaks} remove={deleteItem} />
+      <TodoList
+        tasks={sortedAndSearchedTasks}
+        remove={deleteItem}
+        update={updateItem}
+      />
     </>
   );
 };

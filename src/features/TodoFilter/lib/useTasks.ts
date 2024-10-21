@@ -8,11 +8,15 @@ export const useSortedTasks = (
   sortBy: keyof ITodoItem,
 ): ITodoItem[] => {
   const sortedTasks = useMemo<ITodoItem[]>(() => {
+    console.log(sortBy);
     const sorted = [...tasks].sort((a, b) => {
       const valueA = a[sortBy];
       const valueB = b[sortBy];
 
-      if (typeof valueA === "string" && typeof valueB === "string") {
+      console.log(typeof valueA === "string");
+      console.log(typeof valueB === "string");
+
+      if (valueA === "string" && typeof valueB === "string") {
         return valueA.localeCompare(valueB);
       }
 
@@ -26,6 +30,8 @@ export const useSortedTasks = (
 
       return 0;
     });
+
+    // console.log(sorted);
 
     return sorted;
   }, [sortBy, tasks]);

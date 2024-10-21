@@ -87,7 +87,7 @@ export default {
         "9/12": "75%",
         "10/12": "83.333333%",
         "11/12": "91.666667%",
-        popup: "var(--popup-min-width)",
+        todoList: "var(--todo-list-width)",
       },
       maxWidth: {
         "0": "0px",

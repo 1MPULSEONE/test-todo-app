@@ -1,4 +1,10 @@
-import { Input, MenuItem, Select, type SelectChangeEvent } from "@mui/material";
+import {
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  type SelectChangeEvent,
+} from "@mui/material";
 import { type TaskFilterProps } from "../model/ITaskFilter";
 
 export const TaskFilter: React.FC<TaskFilterProps> = ({
@@ -10,18 +16,26 @@ export const TaskFilter: React.FC<TaskFilterProps> = ({
   };
 
   return (
-    <div>
+    <div className={"flex flex-row items-center gap-x-2"}>
       <Input
-        placeholder={"Поиск..."}
+        placeholder={"Search"}
         value={filter.query}
         onChange={(e) => setFilter({ ...filter, query: e.target.value })}
       />
+      <InputLabel id="select-sort-type-label" className={"text-black"}>
+        Sort by:
+      </InputLabel>
       <Select
-        defaultValue={"Сортировка по:"}
+        id={"select-sort-type"}
+        labelId={"select-sort-type-label"}
+        defaultValue={"Sort by:"}
         value={filter.sort}
         onChange={handleSortChange}
+        className={"tex-black min-w-[120px]"}
       >
-        <MenuItem value={"title"}>By name</MenuItem>
+        <MenuItem value={"title"} defaultChecked>
+          By name
+        </MenuItem>
         <MenuItem value={"date"}>By date</MenuItem>
       </Select>
     </div>
