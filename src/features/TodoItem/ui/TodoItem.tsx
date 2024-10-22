@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type ITodoItem } from "../model/ITask";
 import { TaskSchema, type FormData } from "../model/types";
-import { ZodError } from "zod";
 
 export interface TodoItemProps {
   task: ITodoItem;

@@ -1,12 +1,6 @@
 import React from "react";
-import { type ITodoItem } from "~/features/TodoItem/model/ITask";
 import { TodoItem } from "~/features/TodoItem/ui";
-
-interface TodoListProps {
-  tasks: ITodoItem[];
-  remove: (id: ITodoItem) => void;
-  update: (id: ITodoItem) => void;
-}
+import { type TodoListProps } from "../model/types";
 
 export const TodoList: React.FC<TodoListProps> = ({
   tasks,

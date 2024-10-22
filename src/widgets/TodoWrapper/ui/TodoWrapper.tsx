@@ -8,7 +8,7 @@ import { useTasks } from "~/features/TodoFilter/lib/useTasks";
 import { TaskFilter } from "~/features/TodoFilter/ui";
 import { TodoList } from "~/widgets/todoList/ui";
 
-export const TodoWrapper = () => {
+export const TodoWrapper: React.FC = () => {
   const [tasks, setTasks] = useState<ITodoItem[]>([]);
   const [filter, setFilter] = useState<ITaskFilter>({ sort: "", query: "" });
 
