@@ -33,10 +33,10 @@ export const TaskFilter: React.FC<TaskFilterProps> = ({
         onChange={handleSortChange}
         className={"tex-black min-w-[120px]"}
       >
-        <MenuItem value={"title"} defaultChecked>
+        <MenuItem value={"taskName"} defaultChecked>
           By name
         </MenuItem>
-        <MenuItem value={"date"}>By date</MenuItem>
+        <MenuItem value={"creationDate"}>By date</MenuItem>
       </Select>
     </div>
   );

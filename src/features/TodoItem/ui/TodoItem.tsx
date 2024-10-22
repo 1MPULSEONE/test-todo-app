@@ -1,10 +1,13 @@
 "use client";
 
-import { Button, Checkbox, Input, InputLabel } from "@mui/material";
+import { Button, Checkbox, Input } from "@mui/material";
 import React, { useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { type ITodoItem } from "../model/ITask";
+import { TaskSchema, type FormData } from "../model/types";
+import { ZodError } from "zod";
 
 export interface TodoItemProps {
   task: ITodoItem;
@@ -13,20 +16,26 @@ export interface TodoItemProps {
   labelNumber: number;
 }
 
-interface FormData {
-  taskName: string;
-  isDone: boolean;
-}
-
 export const TodoItem: React.FC<TodoItemProps> = ({
   task,
   deleteTask,
   updateTask,
   labelNumber,
 }) => {
-  const { register, handleSubmit } = useForm<ITodoItem>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: task,
+    resolver: zodResolver(TaskSchema),
   });
+
+  useEffect(() => {
+    if (errors.taskName?.message) {
+      console.log(`[ERROR]: Validation error: ${errors.taskName?.message}`);
+    }
+  }, [errors]);
 
   const updateTodo = (data: FormData) => {
     const updatedTodo = {
@@ -35,6 +44,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
       taskName: data.taskName,
     };
     updateTask(updatedTodo);
+    console.log("[SUCCESS]: Task is updated successfully!");
   };
 
   return (
@@ -43,15 +53,22 @@ export const TodoItem: React.FC<TodoItemProps> = ({
       onSubmit={handleSubmit(updateTodo)}
     >
       <div className={"flex w-max flex-row items-center gap-x-2"}>
-        <InputLabel>{labelNumber}</InputLabel>
+        {labelNumber}
+
         <Checkbox {...register("isDone")} />
       </div>
-
-      <Input
-        {...register("taskName", { required: true })}
-        placeholder={"task name"}
-        className={`${task.isDone ? "line-through" : ""} w-full`}
-      />
+      <div className={"flex flex-col gap-y-5"}>
+        <Input
+          {...register("taskName")}
+          placeholder={"task name"}
+          className={`${task.isDone ? "line-through" : ""} w-full`}
+        />
+        {errors.taskName && (
+          <span className={"font-500 text-red-500"}>
+            {errors.taskName.message}
+          </span>
+        )}
+      </div>
 
       <div className={"flex flex-row items-center gap-x-3"}>
         <Button onClick={() => deleteTask(task)}>

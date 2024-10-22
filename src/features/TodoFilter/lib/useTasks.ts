@@ -7,33 +7,32 @@ export const useSortedTasks = (
   tasks: ITodoItem[],
   sortBy: keyof ITodoItem,
 ): ITodoItem[] => {
-  const sortedTasks = useMemo<ITodoItem[]>(() => {
-    console.log(sortBy);
-    const sorted = [...tasks].sort((a, b) => {
-      const valueA = a[sortBy];
-      const valueB = b[sortBy];
+  const sortedTasks = useMemo(() => {
+    const sortedByKey = [...tasks].sort((a, b) => {
+      let valueA;
+      let valueB;
 
-      console.log(typeof valueA === "string");
-      console.log(typeof valueB === "string");
-
-      if (valueA === "string" && typeof valueB === "string") {
+      if (sortBy == "taskName") {
+        valueA = a.taskName;
+        valueB = b.taskName;
         return valueA.localeCompare(valueB);
       }
 
-      if (typeof valueA === "boolean" && typeof valueB === "boolean") {
-        return valueA === valueB ? 0 : valueA ? 1 : -1;
-      }
-
-      if (valueA instanceof Date && valueB instanceof Date) {
+      if (sortBy == "creationDate") {
+        valueA = a.creationDate;
+        valueB = b.creationDate;
         return valueA.getTime() - valueB.getTime();
       }
-
       return 0;
     });
 
-    // console.log(sorted);
+    const sortedByDone = [...sortedByKey].sort((a, b) => {
+      const valueA = a.isDone;
+      const valueB = b.isDone;
+      return valueA === valueB ? 0 : valueA ? 1 : -1;
+    });
 
-    return sorted;
+    return sortedByDone;
   }, [sortBy, tasks]);
 
   return sortedTasks;

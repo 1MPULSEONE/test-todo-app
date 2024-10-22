@@ -1,6 +1,6 @@
 "use client";
 
-import { TodoForm } from "~/features/TodoForm";
+import { TodoForm } from "~/features/TodoForm/ui";
 import { useState } from "react";
 import { type ITodoItem } from "~/features/TodoItem/model/ITask";
 import { type ITaskFilter } from "~/features/TodoFilter/model/ITaskFilter";
